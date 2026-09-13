@@ -83,7 +83,7 @@ def load_model() -> QualityModel:
 
     _model = QualityModel()
     state = checkpoint.get("model_state_dict", checkpoint)
-    _model.load_state_dict(state)
+    _model.backbone.load_state_dict(state) 
     _model.to(_device).eval()
 
     logger.info(f"[Stage1] Quality model loaded (epoch={checkpoint.get('epoch', '?')})")

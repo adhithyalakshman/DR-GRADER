@@ -7,7 +7,8 @@ export default function EvidenceTable({ rows = [] }) {
         <thead>
           <tr>
             <th>Lesion Type</th>
-            <th>Count</th>
+            <th>Pixel Count</th>
+            <th>Clusters</th>
             <th>ICDR Criterion</th>
           </tr>
         </thead>
@@ -20,12 +21,17 @@ export default function EvidenceTable({ rows = [] }) {
                     className="lesion-swatch"
                     style={{ background: row.color }}
                   />
-                  <span className="highlight">{row.lesion}</span>
+                  <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{row.lesion}</span>
                 </div>
               </td>
               <td>
                 <span className="mono" style={{ color: row.count > 0 ? row.color : 'var(--text-muted)' }}>
-                  {row.count > 0 ? row.count : '—'}
+                  {row.count > 0 ? row.count.toLocaleString() : '—'}
+                </span>
+              </td>
+              <td>
+                <span className="mono" style={{ color: row.components > 0 ? 'var(--text-primary)' : 'var(--text-muted)' }}>
+                  {row.components > 0 ? row.components : '—'}
                 </span>
               </td>
               <td style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>

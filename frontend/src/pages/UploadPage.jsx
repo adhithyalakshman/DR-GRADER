@@ -62,7 +62,7 @@ export default function UploadPage() {
       {/* Hero */}
       <div style={{ textAlign: 'center', marginBottom: '2.5rem' }} className="anim-fade">
         <h1 style={{
-          background: 'linear-gradient(135deg, #00d4ff, #3b82f6, #8b5cf6)',
+          background: 'linear-gradient(135deg, #0284c7, #2563eb, #7c3aed)',
           WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
           marginBottom: '0.75rem'
         }}>
@@ -88,14 +88,15 @@ export default function UploadPage() {
               <div style={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center',
                 padding: '0.4rem 0.75rem',
-                background: 'var(--bg-elevated)', borderRadius: 'var(--r-md)',
-                border: '1px solid var(--border-subtle)'
+                background: 'var(--bg-card)', borderRadius: 'var(--r-md)',
+                border: '1px solid var(--border-subtle)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
               }}>
                 <span style={{ fontWeight: 700, color: 'var(--accent-cyan)' }}>Stage {s.n}</span>
-                <span style={{ color: 'var(--text-secondary)' }}>{s.label}</span>
+                <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>{s.label}</span>
                 <span style={{ color: 'var(--text-muted)', fontSize: '0.7rem' }}>{s.sub}</span>
               </div>
-              {i < 3 && <span style={{ color: 'var(--text-muted)' }}>→</span>}
+              {i < 3 && <span style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>→</span>}
             </div>
           ))}
         </div>
@@ -110,7 +111,7 @@ export default function UploadPage() {
           {isLoading && (
             <div className="card anim-fade" style={{ textAlign: 'center', padding: '1.5rem' }}>
               <div className="spinner spinner-lg" style={{ margin: '0 auto 1rem' }} />
-              <p style={{ color: 'var(--accent-cyan)' }}>{STAGE_LABELS[stage]}</p>
+              <p style={{ color: 'var(--accent-cyan)', fontWeight: 500 }}>{STAGE_LABELS[stage]}</p>
             </div>
           )}
 
@@ -187,8 +188,8 @@ export default function UploadPage() {
                     label={label}
                     value={prob}
                     color={
-                      label === 'Good'   ? '#22c55e' :
-                      label === 'Usable' ? '#f59e0b' : '#ef4444'
+                      label === 'Good'   ? '#16a34a' :
+                      label === 'Usable' ? '#d97706' : '#dc2626'
                     }
                   />
                 ))}
@@ -203,7 +204,7 @@ export default function UploadPage() {
                       <div className="stat-label">Blur Score</div>
                       <div className="stat-value" style={{
                         fontSize: '1.1rem',
-                        color: uploadResult.blur_flag ? '#ef4444' : '#22c55e'
+                        color: uploadResult.blur_flag ? '#dc2626' : '#16a34a'
                       }}>
                         {uploadResult.pre_filters.blur_score?.toFixed(1)}
                       </div>
@@ -213,7 +214,7 @@ export default function UploadPage() {
                       <div className="stat-label">Illumination</div>
                       <div className="stat-value" style={{
                         fontSize: '1.1rem',
-                        color: uploadResult.illum_flag ? '#ef4444' : '#22c55e'
+                        color: uploadResult.illum_flag ? '#dc2626' : '#16a34a'
                       }}>
                         {uploadResult.pre_filters.illum_score?.toFixed(1)}
                       </div>

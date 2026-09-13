@@ -1,9 +1,9 @@
 const GRADE_CONFIG = {
-  0: { color: '#22c55e', bg: 'rgba(34,197,94,0.08)',   border: 'rgba(34,197,94,0.35)',   label: 'No DR',              icon: '🟢' },
-  1: { color: '#84cc16', bg: 'rgba(132,204,22,0.08)',  border: 'rgba(132,204,22,0.35)',  label: 'Mild NPDR',          icon: '🟡' },
-  2: { color: '#f59e0b', bg: 'rgba(245,158,11,0.08)',  border: 'rgba(245,158,11,0.35)',  label: 'Moderate NPDR',      icon: '🟠' },
-  3: { color: '#ef4444', bg: 'rgba(239,68,68,0.08)',   border: 'rgba(239,68,68,0.35)',   label: 'Severe NPDR',        icon: '🔴' },
-  4: { color: '#7c3aed', bg: 'rgba(124,58,237,0.08)',  border: 'rgba(124,58,237,0.35)',  label: 'Proliferative DR',   icon: '🟣' },
+  0: { color: '#16a34a', bg: 'rgba(22,163,74,0.06)',   border: 'rgba(22,163,74,0.25)',   label: 'No DR',              icon: '🟢' },
+  1: { color: '#65a30d', bg: 'rgba(101,163,13,0.06)',  border: 'rgba(101,163,13,0.25)',  label: 'Mild NPDR',          icon: '🟡' },
+  2: { color: '#d97706', bg: 'rgba(217,119,6,0.06)',   border: 'rgba(217,119,6,0.25)',   label: 'Moderate NPDR',      icon: '🟠' },
+  3: { color: '#dc2626', bg: 'rgba(220,38,38,0.06)',   border: 'rgba(220,38,38,0.25)',   label: 'Severe NPDR',        icon: '🔴' },
+  4: { color: '#7c3aed', bg: 'rgba(124,58,237,0.06)',  border: 'rgba(124,58,237,0.25)',  label: 'Proliferative DR',   icon: '🟣' },
 }
 
 export default function GradeBadge({ grade, label, referable, size = 'md' }) {
@@ -22,7 +22,7 @@ export default function GradeBadge({ grade, label, referable, size = 'md' }) {
           borderColor: cfg.color,
           color: cfg.color,
           background: cfg.bg,
-          boxShadow: `0 0 ${isLg ? 24 : 12}px ${cfg.border}`,
+          boxShadow: `0 0 ${isLg ? 16 : 8}px ${cfg.border}`,
         }}
       >
         {grade}

@@ -8,7 +8,7 @@ import OverlayViewer     from '../components/OverlayViewer.jsx'
 import SegmentationPanel from '../components/SegmentationPanel.jsx'
 import { getReport }     from '../api.js'
 
-const GRADE_COLORS = ['#22c55e','#84cc16','#f59e0b','#ef4444','#7c3aed']
+const GRADE_COLORS = ['#16a34a','#65a30d','#d97706','#dc2626','#7c3aed']
 
 export default function ReportPage() {
   const { reportId } = useParams()
@@ -39,7 +39,7 @@ export default function ReportPage() {
   )
 
   const { grade = {}, quality = {}, segmentation = {}, explainability = {}, images = {}, recommendation } = report
-  const gradeColor = GRADE_COLORS[grade.icdr_grade] ?? '#8ba3cc'
+  const gradeColor = GRADE_COLORS[grade.icdr_grade] ?? '#9ca3af'
 
   return (
     <main className="page-container anim-fade">
@@ -68,10 +68,8 @@ export default function ReportPage() {
       {/* ── Summary banner */}
       <div className="card anim-fade" style={{
         marginBottom: '1.5rem',
-        borderColor: grade.referable ? 'rgba(239,68,68,0.4)' : gradeColor + '40',
-        background: grade.referable
-          ? 'rgba(239,68,68,0.06)'
-          : `rgba(${gradeColor.match(/\d+/g)?.join(',') ?? '34,197,94'},0.04)`,
+        borderColor: grade.referable ? 'rgba(220,38,38,0.25)' : gradeColor + '25',
+        background: grade.referable ? 'rgba(220,38,38,0.03)' : 'rgba(22,163,74,0.02)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
           <GradeBadge
@@ -92,7 +90,7 @@ export default function ReportPage() {
             {/* Referable probability */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Referable DR probability:</span>
-              <span className="mono" style={{ color: grade.referable ? '#ef4444' : '#22c55e', fontWeight: 700 }}>
+              <span className="mono" style={{ color: grade.referable ? '#dc2626' : '#16a34a', fontWeight: 700 }}>
                 {grade.referable_probability != null
                   ? (grade.referable_probability * 100).toFixed(1) + '%'
                   : '—'
@@ -108,7 +106,7 @@ export default function ReportPage() {
 
           {/* Recommendation box */}
           <div style={{
-            flex: '0 0 auto', maxWidth: 280,
+            flex: '0 0 auto', maxWidth: 300,
             background: 'var(--bg-elevated)', borderRadius: 'var(--r-lg)',
             padding: '0.875rem 1rem', border: '1px solid var(--border-subtle)'
           }}>
@@ -145,11 +143,11 @@ export default function ReportPage() {
             <div className="card-header">
               <div className="card-icon violet">🔬</div>
               <div>
-                <h3>Stage 2 — Segmentation</h3>
-                <p style={{ fontSize: '0.8rem' }}>Lesions · OD/Fovea · Vessel coverage</p>
+                <h3>Stage 2 — Retinal Structure Segmentation</h3>
+                <p style={{ fontSize: '0.8rem' }}>Lesions · OD/Fovea · Vessel coverage · Density quadrants</p>
               </div>
             </div>
-            <SegmentationPanel segmentation={segmentation} />
+            <SegmentationPanel segmentation={segmentation} images={images} />
           </div>
         </div>
 
@@ -188,7 +186,7 @@ export default function ReportPage() {
                 key={label}
                 label={label}
                 value={prob}
-                color={label === 'Good' ? '#22c55e' : label === 'Usable' ? '#f59e0b' : '#ef4444'}
+                color={label === 'Good' ? '#16a34a' : label === 'Usable' ? '#d97706' : '#dc2626'}
               />
             ))}
           </div>

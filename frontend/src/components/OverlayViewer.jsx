@@ -45,36 +45,57 @@ export default function OverlayViewer({ images = {} }) {
         <span className="img-label">{available.find(v => v.key === active)?.label ?? active}</span>
       </div>
 
-      {/* Legend for fused view */}
-      {active === 'fused_overlay' && (
-        <div style={{
-          marginTop: '0.75rem',
-          display: 'flex', flexWrap: 'wrap', gap: '0.5rem',
-          fontSize: '0.75rem', color: 'var(--text-muted)'
-        }}>
-          {[
-            { color: '#ef4444', label: 'Microaneurysms' },
-            { color: '#f59e0b', label: 'Hard Exudates' },
-            { color: '#7c3aed', label: 'Haemorrhages' },
-            { color: '#06b6d4', label: 'Cotton-Wool Spots' },
-            { color: '#22c55e', label: 'Optic Disc' },
-            { color: 'rgba(200,200,200,0.6)', label: 'Vessels' },
-          ].map(item => (
-            <span key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <span style={{
-                width: 10, height: 10, borderRadius: 2,
-                background: item.color, display: 'inline-block', flexShrink: 0
-              }} />
-              {item.label}
-            </span>
-          ))}
+      {/* Grad-CAM legend with color scale */}
+      {active === 'gradcam' && (
+        <div style={{ marginTop: '0.75rem' }}>
+          <div className="gradcam-legend">
+            <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>Activation:</span>
+            <span style={{ color: 'var(--text-muted)' }}>Low</span>
+            <div className="gradcam-legend-bar" />
+            <span style={{ color: 'var(--text-muted)' }}>High</span>
+          </div>
+          <p style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+            Grad-CAM heatmap computed w.r.t. P(grade≥2) — highlights regions driving the referable-DR decision.
+            <br/>
+            <strong>Red/Yellow</strong> = high activation (model focuses here) &nbsp;|&nbsp;
+            <strong>Blue/Green</strong> = low activation
+          </p>
         </div>
       )}
 
-      {active === 'gradcam' && (
-        <p style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-          Grad-CAM heatmap computed w.r.t. P(grade≥2) — highlights regions driving the referable-DR decision.
-        </p>
+      {/* Legend for fused view */}
+      {active === 'fused_overlay' && (
+        <div style={{ marginTop: '0.75rem' }}>
+          <div style={{
+            display: 'flex', flexWrap: 'wrap', gap: '0.6rem',
+            fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '0.5rem'
+          }}>
+            {[
+              { color: '#dc2626', label: 'Microaneurysms' },
+              { color: '#d97706', label: 'Hard Exudates' },
+              { color: '#7c3aed', label: 'Haemorrhages' },
+              { color: '#0284c7', label: 'Cotton-Wool Spots' },
+              { color: '#16a34a', label: 'Optic Disc' },
+              { color: '#eab308', label: 'Macula ✕' },
+              { color: 'rgba(200,200,200,0.7)', label: 'Vessels' },
+            ].map(item => (
+              <span key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span style={{
+                  width: 10, height: 10, borderRadius: 2,
+                  background: item.color, display: 'inline-block', flexShrink: 0
+                }} />
+                {item.label}
+              </span>
+            ))}
+          </div>
+          {/* Grad-CAM scale in fused view */}
+          <div className="gradcam-legend" style={{ marginTop: '0.25rem' }}>
+            <span style={{ fontWeight: 600, color: 'var(--text-secondary)', fontSize: '0.72rem' }}>Grad-CAM:</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.72rem' }}>Low</span>
+            <div className="gradcam-legend-bar" style={{ width: 80, height: 10 }} />
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.72rem' }}>High</span>
+          </div>
+        </div>
       )}
     </div>
   )
