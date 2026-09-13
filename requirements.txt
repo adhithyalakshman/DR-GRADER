@@ -1,0 +1,29 @@
+# DR Screening Pipeline — Python Dependencies
+
+# Web framework
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-multipart==0.0.9
+
+# Deep learning
+torch>=2.0.0
+torchvision>=0.15.0
+timm>=0.9.12
+
+# Image processing
+opencv-python-headless>=4.8.0
+Pillow>=10.0.0
+scikit-image>=0.21.0
+numpy>=1.24.0
+
+# Stage 2 segmentation toolkits
+fundus-lesions-toolkit
+git+https://github.com/ClementPla/fundus-odmac-toolkit.git
+
+# Data
+pandas>=2.0.0
+scipy>=1.11.0
+
+# Utilities
+aiofiles>=23.0.0
+python-jose==3.3.0
