@@ -102,7 +102,7 @@ def assemble_report(
 ) -> Dict[str, Any]:
     """Assemble the final structured report returned by GET /api/report/{id}."""
 
-    quality_label = stage1_result.get("label", "Unknown")
+    quality_label = stage1_result.get("quality_label", "Unknown")
 
     if stage3_result is None:
         # Image was rejected at Stage 1

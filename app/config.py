@@ -43,7 +43,7 @@ STAGE2_CANONICAL_SIZE = 512   # all masks registered to this resolution
 # ──────────────────────────────────────────────
 # Stage 3 — DR Grading
 # ──────────────────────────────────────────────
-STAGE3_MODEL_ARCH   = "efficientnet_b0"
+STAGE3_MODEL_ARCH   = "efficientnet_b3"
 STAGE3_IMG_SIZE     = 224
 STAGE3_NUM_CLASSES  = 5
 STAGE3_USE_ORDINAL  = True     # CORAL ordinal head
