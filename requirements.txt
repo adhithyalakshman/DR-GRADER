@@ -4,12 +4,12 @@
 fastapi==0.111.0
 uvicorn[standard]==0.29.0
 python-multipart==0.0.9
-
+scikit-image>=0.22
 # Deep learning
 torch>=2.0.0
 torchvision>=0.15.0
 timm>=0.9.12
-
+multipart
 # Image processing
 opencv-python-headless>=4.8.0
 Pillow>=10.0.0
@@ -20,14 +20,7 @@ numpy>=1.24.0
 pandas>=2.0.0
 scipy>=1.11.0
 
-# Stage 2 — segmentation toolkits
-fundus-lesions-toolkit
-git+https://github.com/ClementPla/fundus-data-toolkit.git
-git+https://github.com/ClementPla/fundus-odmac-toolkit.git
-segmentation_models_pytorch>=0.3.3
-huggingface_hub>=0.20.0
-safetensors>=0.4.0
-monai>=1.3.0
+
 
 # Stage 3 — metrics, calibration, ordinal head
 scikit-learn>=1.3.0
@@ -41,3 +34,12 @@ weasyprint>=61.0
 # Utilities
 aiofiles>=23.0.0
 python-jose==3.3.0
+
+# Stage 2 — segmentation toolkits
+fundus-lesions-toolkit
+git+https://github.com/ClementPla/fundus-data-toolkit.git
+git+https://github.com/ClementPla/fundus-odmac-toolkit.git
+segmentation_models_pytorch>=0.3.3
+huggingface_hub>=0.20.0
+safetensors>=0.4.0
+monai>=1.3.0
