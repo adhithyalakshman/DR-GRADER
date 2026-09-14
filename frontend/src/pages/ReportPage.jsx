@@ -7,6 +7,7 @@ import EvidenceTable     from '../components/EvidenceTable.jsx'
 import OverlayViewer     from '../components/OverlayViewer.jsx'
 import SegmentationPanel from '../components/SegmentationPanel.jsx'
 import { getReport }     from '../api.js'
+import generatePdf       from '../utils/generatePdf.js'
 
 const GRADE_COLORS = ['#16a34a','#65a30d','#d97706','#dc2626','#7c3aed']
 
@@ -15,11 +16,19 @@ export default function ReportPage() {
   const nav = useNavigate()
   const [report, setReport] = useState(null)
   const [error,  setError]  = useState(null)
+  const [pdfLoading, setPdfLoading] = useState(false)
+  const [patientInfo, setPatientInfo] = useState(null)
 
   useEffect(() => {
     getReport(reportId)
       .then(setReport)
       .catch(e => setError(e.message))
+
+    // Load patient info from localStorage
+    try {
+      const stored = localStorage.getItem(`patient_${reportId}`)
+      if (stored) setPatientInfo(JSON.parse(stored))
+    } catch {}
   }, [reportId])
 
   if (error) return (
@@ -56,14 +65,98 @@ export default function ReportPage() {
           <h1>Fundus Analysis Report</h1>
         </div>
 
-        <button
-          id="new-scan-btn"
-          className="btn btn-primary"
-          onClick={() => nav('/')}
-        >
-          + New Scan
-        </button>
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <button
+            id="download-pdf-btn"
+            className="btn btn-secondary"
+            disabled={pdfLoading}
+            onClick={async () => {
+              setPdfLoading(true)
+              try {
+                await generatePdf(report, reportId, patientInfo)
+              } catch (e) {
+                console.error('PDF generation failed:', e)
+              } finally {
+                setPdfLoading(false)
+              }
+            }}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+          >
+            {pdfLoading ? (
+              <><span className="spinner" style={{ width: 14, height: 14 }} /> Generating…</>
+            ) : (
+              <><span style={{ fontSize: '1rem' }}>📄</span> Download PDF</>
+            )}
+          </button>
+
+          <button
+            id="new-scan-btn"
+            className="btn btn-primary"
+            onClick={() => nav('/')}
+          >
+            + New Scan
+          </button>
+        </div>
       </div>
+
+      {/* ── Patient Information Card */}
+      {patientInfo && (
+        <div className="card anim-fade" style={{ marginBottom: '1.5rem' }}>
+          <div className="card-header">
+            <div className="card-icon cyan">👤</div>
+            <div>
+              <h3>Patient Information</h3>
+              <p style={{ fontSize: '0.8rem' }}>Collected at screening intake</p>
+            </div>
+          </div>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+            gap: '0.75rem',
+          }}>
+            <div className="stat-card">
+              <div className="stat-label">Patient ID</div>
+              <div className="stat-value" style={{ fontSize: '0.95rem' }}>{patientInfo.patientId}</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-label">Patient Name</div>
+              <div className="stat-value" style={{ fontSize: '0.95rem' }}>{patientInfo.patientName}</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-label">Age</div>
+              <div className="stat-value" style={{ fontSize: '0.95rem' }}>{patientInfo.age} years</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-label">Gender</div>
+              <div className="stat-value" style={{ fontSize: '0.95rem' }}>{patientInfo.gender}</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-label">Duration of Diabetes</div>
+              <div className="stat-value" style={{ fontSize: '0.95rem' }}>{patientInfo.diabetesDuration} years</div>
+            </div>
+            {patientInfo.hba1c && (
+              <div className="stat-card">
+                <div className="stat-label">HbA1c</div>
+                <div className="stat-value" style={{ fontSize: '0.95rem' }}>{patientInfo.hba1c}%</div>
+              </div>
+            )}
+            {patientInfo.previousTreatment && (
+              <div className="stat-card">
+                <div className="stat-label">Previous Eye Treatment</div>
+                <div className="stat-value" style={{ fontSize: '0.95rem' }}>{patientInfo.previousTreatment}</div>
+              </div>
+            )}
+            {patientInfo.visionSymptoms && (
+              <div className="stat-card" style={{ gridColumn: '1 / -1' }}>
+                <div className="stat-label">Vision / Eye Symptoms</div>
+                <div className="stat-value" style={{ fontSize: '0.85rem', fontWeight: 400 }}>
+                  {patientInfo.visionSymptoms}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* ── Summary banner */}
       <div className="card anim-fade" style={{

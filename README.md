@@ -36,7 +36,7 @@ DR CLASSIFIER/
 # Create a virtual environment (recommended)
 python -m venv .venv
 # Activate it:
-#   Windows:  .venv\Scripts\activate
+#   Windows:  source .venv/Scripts/activate
 #   Linux/Mac: source .venv/bin/activate
 
 # Install all dependencies:
